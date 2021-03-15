@@ -7,11 +7,11 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/dao"
-	"github.com/derailed/k9s/internal/view"
 	"github.com/derailed/tview"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/dao"
+	"github.com/open-infra/osc/internal/view"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -65,8 +65,8 @@ func TestLogViewSave(t *testing.T) {
 		dao.NewLogItemFromString("blee"),
 		dao.NewLogItemFromString("bozo"),
 	}.Lines(false))
-	config.K9sDumpDir = "/tmp"
-	dir := filepath.Join(config.K9sDumpDir, app.Config.K9s.CurrentCluster)
+	config.OscDumpDir = "/tmp"
+	dir := filepath.Join(config.OscDumpDir, app.Config.Osc.CurrentCluster)
 	c1, _ := ioutil.ReadDir(dir)
 	v.SaveCmd(nil)
 	c2, _ := ioutil.ReadDir(dir)

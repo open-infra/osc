@@ -1,10 +1,10 @@
 <img src="assets/k9s.png" alt="k9s">
 
-## K9s - Kubernetes CLI To Manage Your Clusters In Style!
+## K9s - OpenStack CLI To Manage Your Clusters In Style!
 
-K9s provides a terminal UI to interact with your Kubernetes clusters.
+K9s provides a terminal UI to interact with your OpenStack clusters.
 The aim of this project is to make it easier to navigate, observe and manage
-your applications in the wild. K9s continually watches Kubernetes
+your applications in the wild. K9s continually watches OpenStack
 for changes and offers subsequent commands to interact with your observed resources.
 
 ---
@@ -43,9 +43,9 @@ For all other cases, please reach out to us so we can discuss your needs:
 [![codebeat badge](https://codebeat.co/badges/89e5a80e-dfe8-4426-acf6-6be781e0a12e)](https://codebeat.co/projects/github-com-derailed-k9s-master)
 [![Build Status](https://travis-ci.com/derailed/k9s.svg?branch=master)](https://travis-ci.com/derailed/k9s)
 [![Docker Repository on Quay](https://quay.io/repository/derailed/k9s/status "Docker Repository on Quay")](https://quay.io/repository/derailed/k9s)
-[![release](https://img.shields.io/github/release-pre/derailed/k9s.svg)](https://github.com/derailed/k9s/releases)
+[![release](https://img.shields.io/github/release-pre/derailed/k9s.svg)](https://github.com/open-infra/osc/releases)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/mum4k/termdash/blob/master/LICENSE)
-[![Releases](https://img.shields.io/github/downloads/derailed/k9s/total.svg)](https://github.com/derailed/k9s/releases)
+[![Releases](https://img.shields.io/github/downloads/derailed/k9s/total.svg)](https://github.com/open-infra/osc/releases)
 
 ---
 
@@ -66,7 +66,7 @@ Wanna discuss K9s features with your fellow `K9sers` or simply show your support
 
 K9s is available on Linux, macOS and Windows platforms.
 
-* Binaries for Linux, Windows and Mac are available as tarballs in the [release](https://github.com/derailed/k9s/releases) page.
+* Binaries for Linux, Windows and Mac are available as tarballs in the [release](https://github.com/open-infra/osc/releases) page.
 
 * Via Homebrew for macOS or LinuxBrew for Linux
 
@@ -236,17 +236,17 @@ K9s uses aliases to navigate most K8s resources.
 | Show active keyboard mnemonics and help                        | `?`                           |                                                                        |
 | Show all available resource alias                              | `ctrl-a`                      |                                                                        |
 | To bail out of K9s                                             | `:q`, `ctrl-c`                |                                                                        |
-| View a Kubernetes resource using singular/plural or short-name | `:`po⏎                        | accepts singular, plural, short-name or alias ie pod or pods           |
-| View a Kubernetes resource in a given namespace                | `:`alias namespace⏎           |                                                                        |
+| View a OpenStack resource using singular/plural or short-name | `:`po⏎                        | accepts singular, plural, short-name or alias ie pod or pods           |
+| View a OpenStack resource in a given namespace                | `:`alias namespace⏎           |                                                                        |
 | Filter out a resource view given a filter                      | `/`filter⏎                    | Regex2 supported ie `fred|blee` to filter resources named fred or blee |
 | Inverse regex filer                                            | `/`! filter⏎                  | Keep everything that *doesn't* match.                                  |
 | Filter resource view by labels                                 | `/`-l label-selector⏎         |                                                                        |
 | Fuzzy find a resource given a filter                           | `/`-f filter⏎                 |                                                                        |
 | Bails out of view/command/filter mode                          | `<esc>`                       |                                                                        |
 | Key mapping to describe, view, edit, view logs,...             | `d`,`v`, `e`, `l`,...         |                                                                        |
-| To view and switch to another Kubernetes context               | `:`ctx⏎                       |                                                                        |
-| To view and switch to another Kubernetes context               | `:`ctx context-name⏎          |                                                                        |
-| To view and switch to another Kubernetes namespace             | `:`ns⏎                        |                                                                        |
+| To view and switch to another OpenStack context               | `:`ctx⏎                       |                                                                        |
+| To view and switch to another OpenStack context               | `:`ctx context-name⏎          |                                                                        |
+| To view and switch to another OpenStack namespace             | `:`ns⏎                        |                                                                        |
 | To view all saved resources                                    | `:`screendump or sd⏎          |                                                                        |
 | To delete a resource (TAB and ENTER to confirm)                | `ctrl-d`                      |                                                                        |
 | To kill a resource (no confirmation dialog!)                   | `ctrl-k`                      |                                                                        |
@@ -389,7 +389,7 @@ k9s:
 
 ## Command Aliases
 
-In K9s, you can define your very own command aliases (shortnames) to access your resources. In your `$HOME/.k9s` define a file called `alias.yml`. A K9s alias defines pairs of alias:gvr. A gvr (Group/Version/Resource) represents a fully qualified Kubernetes resource identifier. Here is an example of an alias file:
+In K9s, you can define your very own command aliases (shortnames) to access your resources. In your `$HOME/.k9s` define a file called `alias.yml`. A K9s alias defines pairs of alias:gvr. A gvr (Group/Version/Resource) represents a fully qualified OpenStack resource identifier. Here is an example of an alias file:
 
 ```yaml
 # $HOME/.k9s/alias.yml
@@ -593,7 +593,7 @@ benchmarks:
 
 ## K9s RBAC FU
 
-On RBAC enabled clusters, you would need to give your users/groups capabilities so that they can use K9s to explore their Kubernetes cluster. K9s needs minimally read privileges at both the cluster and namespace level to display resources and metrics.
+On RBAC enabled clusters, you would need to give your users/groups capabilities so that they can use K9s to explore their OpenStack cluster. K9s needs minimally read privileges at both the cluster and namespace level to display resources and metrics.
 
 These rules below are just suggestions. You will need to customize them based on your environment policies. If you need to edit/delete resources extra Fu will be necessary.
 
@@ -781,7 +781,7 @@ that you want, please file an issue and if so inclined submit a PR!
 
 K9s will most likely blow up if...
 
-1. You're running older versions of Kubernetes. K9s works best on Kubernetes latest.
+1. You're running older versions of OpenStack. K9s works best on OpenStack latest.
 2. You don't have enough RBAC fu to manage your cluster.
 
 ---

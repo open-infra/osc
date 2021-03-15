@@ -4,10 +4,10 @@ import (
 	"context"
 	"strings"
 
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/render"
-	"github.com/derailed/k9s/internal/ui"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/render"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/gdamore/tcell/v2"
 )
 

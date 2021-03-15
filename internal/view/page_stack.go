@@ -3,8 +3,8 @@ package view
 import (
 	"context"
 
-	"github.com/derailed/k9s/internal/model"
-	"github.com/derailed/k9s/internal/ui"
+	"github.com/open-infra/osc/internal/model"
+	"github.com/open-infra/osc/internal/ui"
 )
 
 // PageStack represents a stack of pages.

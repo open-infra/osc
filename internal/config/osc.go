@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/derailed/k9s/internal/client"
+	"github.com/open-infra/osc/internal/client"
 )
 
 const (
@@ -9,8 +9,8 @@ const (
 	defaultMaxConnRetry = 5
 )
 
-// K9s tracks K9s configuration options.
-type K9s struct {
+// Osc tracks Osc configuration options.
+type Osc struct {
 	RefreshRate       int                 `yaml:"refreshRate"`
 	MaxConnRetry      int                 `yaml:"maxConnRetry"`
 	EnableMouse       bool                `yaml:"enableMouse"`
@@ -30,9 +30,9 @@ type K9s struct {
 	manualCommand     *string
 }
 
-// NewK9s create a new K9s configuration.
-func NewK9s() *K9s {
-	return &K9s{
+// NewOsc create a new K9s configuration.
+func NewOsc() *Osc {
+	return &Osc{
 		RefreshRate:  defaultRefreshRate,
 		MaxConnRetry: defaultMaxConnRetry,
 		Logger:       NewLogger(),
@@ -42,29 +42,29 @@ func NewK9s() *K9s {
 }
 
 // OverrideRefreshRate set the refresh rate manually.
-func (k *K9s) OverrideRefreshRate(r int) {
+func (k *Osc) OverrideRefreshRate(r int) {
 	k.manualRefreshRate = r
 }
 
 // OverrideHeadless set the headlessness manually.
-func (k *K9s) OverrideHeadless(b bool) {
+func (k *Osc) OverrideHeadless(b bool) {
 	k.manualHeadless = &b
 }
 
 // OverrideCrumbsless set the headlessness manually.
-func (k *K9s) OverrideCrumbsless(b bool) {
+func (k *Osc) OverrideCrumbsless(b bool) {
 	k.manualCrumbsless = &b
 }
 
 // OverrideReadOnly set the readonly mode manually.
-func (k *K9s) OverrideReadOnly(b bool) {
+func (k *Osc) OverrideReadOnly(b bool) {
 	if b {
 		k.manualReadOnly = &b
 	}
 }
 
 // OverrideWrite set the write mode manually.
-func (k *K9s) OverrideWrite(b bool) {
+func (k *Osc) OverrideWrite(b bool) {
 	if b {
 		var flag bool
 		k.manualReadOnly = &flag
@@ -72,12 +72,12 @@ func (k *K9s) OverrideWrite(b bool) {
 }
 
 // OverrideCommand set the command manually.
-func (k *K9s) OverrideCommand(cmd string) {
+func (k *Osc) OverrideCommand(cmd string) {
 	k.manualCommand = &cmd
 }
 
 // IsHeadless returns headless setting.
-func (k *K9s) IsHeadless() bool {
+func (k *Osc) IsHeadless() bool {
 	h := k.Headless
 	if k.manualHeadless != nil && *k.manualHeadless {
 		h = *k.manualHeadless
@@ -87,7 +87,7 @@ func (k *K9s) IsHeadless() bool {
 }
 
 // IsCrumbsless returns crumbsless setting.
-func (k *K9s) IsCrumbsless() bool {
+func (k *Osc) IsCrumbsless() bool {
 	h := k.Crumbsless
 	if k.manualCrumbsless != nil && *k.manualCrumbsless {
 		h = *k.manualCrumbsless
@@ -97,7 +97,7 @@ func (k *K9s) IsCrumbsless() bool {
 }
 
 // GetRefreshRate returns the current refresh rate.
-func (k *K9s) GetRefreshRate() int {
+func (k *Osc) GetRefreshRate() int {
 	rate := k.RefreshRate
 	if k.manualRefreshRate != 0 {
 		rate = k.manualRefreshRate
@@ -107,7 +107,7 @@ func (k *K9s) GetRefreshRate() int {
 }
 
 // IsReadOnly returns the readonly setting.
-func (k *K9s) IsReadOnly() bool {
+func (k *Osc) IsReadOnly() bool {
 	readOnly := k.ReadOnly
 	if k.manualReadOnly != nil {
 		readOnly = *k.manualReadOnly
@@ -117,7 +117,7 @@ func (k *K9s) IsReadOnly() bool {
 }
 
 // ActiveCluster returns the currently active cluster.
-func (k *K9s) ActiveCluster() *Cluster {
+func (k *Osc) ActiveCluster() *Cluster {
 	if k.Clusters == nil {
 		k.Clusters = map[string]*Cluster{}
 	}
@@ -130,7 +130,7 @@ func (k *K9s) ActiveCluster() *Cluster {
 	return k.Clusters[k.CurrentCluster]
 }
 
-func (k *K9s) validateDefaults() {
+func (k *Osc) validateDefaults() {
 	if k.RefreshRate <= 0 {
 		k.RefreshRate = defaultRefreshRate
 	}
@@ -139,7 +139,7 @@ func (k *K9s) validateDefaults() {
 	}
 }
 
-func (k *K9s) validateClusters(c client.Connection, ks KubeSettings) {
+func (k *Osc) validateClusters(c client.Connection, ks KubeSettings) {
 	cc, err := ks.ClusterNames()
 	if err != nil {
 		return
@@ -157,7 +157,7 @@ func (k *K9s) validateClusters(c client.Connection, ks KubeSettings) {
 }
 
 // Validate the current configuration.
-func (k *K9s) Validate(c client.Connection, ks KubeSettings) {
+func (k *Osc) Validate(c client.Connection, ks KubeSettings) {
 	k.validateDefaults()
 	if k.Clusters == nil {
 		k.Clusters = map[string]*Cluster{}

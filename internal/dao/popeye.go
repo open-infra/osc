@@ -11,13 +11,13 @@ import (
 	"sort"
 	"time"
 
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
-	cfg "github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/render"
 	"github.com/derailed/popeye/pkg"
 	"github.com/derailed/popeye/pkg/config"
 	"github.com/derailed/popeye/types"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
+	cfg "github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/render"
 	"github.com/rs/zerolog/log"
 	"k8s.io/apimachinery/pkg/runtime"
 )
@@ -65,9 +65,9 @@ func (p *Popeye) List(ctx context.Context, ns string) ([]runtime.Object, error) 
 		flags.Sections = &sections
 		flags.ActiveNamespace = &ns
 	}
-	spinach := filepath.Join(cfg.K9sHome(), "spinach.yml")
+	spinach := filepath.Join(cfg.OscHome(), "spinach.yml")
 	if c, err := p.Factory.Client().Config().CurrentContextName(); err == nil {
-		spinach = filepath.Join(cfg.K9sHome(), fmt.Sprintf("%s_spinach.yml", c))
+		spinach = filepath.Join(cfg.OscHome(), fmt.Sprintf("%s_spinach.yml", c))
 	}
 	if _, err := os.Stat(spinach); err == nil {
 		flags.Spinach = &spinach

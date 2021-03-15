@@ -6,16 +6,16 @@ import (
 	"image"
 	"strings"
 
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/health"
-	"github.com/derailed/k9s/internal/model"
-	"github.com/derailed/k9s/internal/render"
-	"github.com/derailed/k9s/internal/tchart"
-	"github.com/derailed/k9s/internal/ui"
 	"github.com/derailed/tview"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/health"
+	"github.com/open-infra/osc/internal/model"
+	"github.com/open-infra/osc/internal/render"
+	"github.com/open-infra/osc/internal/tchart"
+	"github.com/open-infra/osc/internal/ui"
 )
 
 // Grapheable represents a graphic component.
@@ -158,7 +158,7 @@ func (p *Pulse) PulseChanged(c *health.Check) {
 		perc := client.ToPercentage(c.Tally(health.S1), c.Tally(health.S2))
 		v.SetLegend(fmt.Sprintf(cpuFmt,
 			strings.Title(gvr.R()),
-			p.app.Config.K9s.Thresholds.SeverityColor("cpu", perc),
+			p.app.Config.Osc.Thresholds.SeverityColor("cpu", perc),
 			render.PrintPerc(perc),
 			nn[0],
 			render.AsThousands(c.Tally(health.S1)),
@@ -169,7 +169,7 @@ func (p *Pulse) PulseChanged(c *health.Check) {
 		perc := client.ToPercentage(c.Tally(health.S1), c.Tally(health.S2))
 		v.SetLegend(fmt.Sprintf(memFmt,
 			strings.Title(gvr.R()),
-			p.app.Config.K9s.Thresholds.SeverityColor("memory", perc),
+			p.app.Config.Osc.Thresholds.SeverityColor("memory", perc),
 			render.PrintPerc(perc),
 			nn[0],
 			render.AsThousands(c.Tally(health.S1)),

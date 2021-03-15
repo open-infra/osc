@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"runtime/debug"
 
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/color"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/view"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/color"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/view"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
@@ -17,9 +17,9 @@ import (
 )
 
 const (
-	appName      = "k9s"
-	shortAppDesc = "A graphical CLI for your Kubernetes cluster management."
-	longAppDesc  = "K9s is a CLI to view and manage your Kubernetes clusters."
+	appName      = "osc"
+	shortAppDesc = "A graphical CLI for your OpenStack cluster management."
+	longAppDesc  = "Osc is a CLI to view and manage your OpenStack clusters."
 )
 
 var _ config.KubeSettings = (*client.Config)(nil)
@@ -39,7 +39,7 @@ var (
 
 func init() {
 	rootCmd.AddCommand(versionCmd(), infoCmd())
-	initK9sFlags()
+	initOscFlags()
 	initK8sFlags()
 
 	var flags flag.FlagSet
@@ -56,7 +56,7 @@ func init() {
 	if err := flags.Set("v", "0"); err != nil {
 		panic(err)
 	}
-	if err := flags.Set("log_file", config.K9sLogs); err != nil {
+	if err := flags.Set("log_file", config.OscLogs); err != nil {
 		panic(err)
 	}
 }
@@ -93,25 +93,25 @@ func run(cmd *cobra.Command, args []string) {
 }
 
 func loadConfiguration() *config.Config {
-	log.Info().Msg("🐶 K9s starting up...")
+	log.Info().Msg("☁️ Osc starting up...")
 
 	// Load K9s config file...
 	k8sCfg := client.NewConfig(k8sFlags)
 	k9sCfg := config.NewConfig(k8sCfg)
 
-	if err := k9sCfg.Load(config.K9sConfigFile); err != nil {
+	if err := k9sCfg.Load(config.OscConfigFile); err != nil {
 		log.Warn().Msg("Unable to locate K9s config. Generating new configuration...")
 	}
 
 	if *k9sFlags.RefreshRate != config.DefaultRefreshRate {
-		k9sCfg.K9s.OverrideRefreshRate(*k9sFlags.RefreshRate)
+		k9sCfg.Osc.OverrideRefreshRate(*k9sFlags.RefreshRate)
 	}
 
-	k9sCfg.K9s.OverrideHeadless(*k9sFlags.Headless)
-	k9sCfg.K9s.OverrideCrumbsless(*k9sFlags.Crumbsless)
-	k9sCfg.K9s.OverrideReadOnly(*k9sFlags.ReadOnly)
-	k9sCfg.K9s.OverrideWrite(*k9sFlags.Write)
-	k9sCfg.K9s.OverrideCommand(*k9sFlags.Command)
+	k9sCfg.Osc.OverrideHeadless(*k9sFlags.Headless)
+	k9sCfg.Osc.OverrideCrumbsless(*k9sFlags.Crumbsless)
+	k9sCfg.Osc.OverrideReadOnly(*k9sFlags.ReadOnly)
+	k9sCfg.Osc.OverrideWrite(*k9sFlags.Write)
+	k9sCfg.Osc.OverrideCommand(*k9sFlags.Command)
 
 	if isBoolSet(k9sFlags.AllNamespaces) && k9sCfg.SetActiveNamespace(client.AllNamespaces) != nil {
 		log.Error().Msg("Setting active namespace")
@@ -132,7 +132,7 @@ func loadConfiguration() *config.Config {
 		if !k9sCfg.GetConnection().ConnectionOK() {
 			panic("No connectivity")
 		}
-		log.Info().Msg("✅ Kubernetes connectivity")
+		log.Info().Msg("✅ OpenStack connectivity")
 		if err := k9sCfg.Save(); err != nil {
 			log.Error().Err(err).Msg("Config save")
 		}
@@ -160,7 +160,7 @@ func parseLevel(level string) zerolog.Level {
 	}
 }
 
-func initK9sFlags() {
+func initOscFlags() {
 	k9sFlags = config.NewFlags()
 	rootCmd.Flags().IntVarP(
 		k9sFlags.RefreshRate,

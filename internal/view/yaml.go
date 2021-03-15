@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/derailed/k9s/internal/config"
 	"github.com/derailed/tview"
+	"github.com/open-infra/osc/internal/config"
 	"github.com/rs/zerolog/log"
 )
 
@@ -61,7 +61,7 @@ func enableRegion(str string) string {
 }
 
 func saveYAML(cluster, name, data string) (string, error) {
-	dir := filepath.Join(config.K9sDumpDir, sanitizeFilename(cluster))
+	dir := filepath.Join(config.OscDumpDir, sanitizeFilename(cluster))
 	if err := ensureDir(dir); err != nil {
 		return "", err
 	}

@@ -7,12 +7,12 @@ import (
 	"strings"
 
 	"github.com/atotto/clipboard"
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/model"
-	"github.com/derailed/k9s/internal/ui"
 	"github.com/derailed/tview"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/model"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/rs/zerolog/log"
 	"github.com/sahilm/fuzzy"
 )
@@ -299,7 +299,7 @@ func (v *LiveView) resetCmd(evt *tcell.EventKey) *tcell.EventKey {
 }
 
 func (v *LiveView) saveCmd(evt *tcell.EventKey) *tcell.EventKey {
-	if path, err := saveYAML(v.app.Config.K9s.CurrentCluster, v.title, v.text.GetText(true)); err != nil {
+	if path, err := saveYAML(v.app.Config.Osc.CurrentCluster, v.title, v.text.GetText(true)); err != nil {
 		v.app.Flash().Err(err)
 	} else {
 		v.app.Flash().Infof("Log %s saved successfully!", path)

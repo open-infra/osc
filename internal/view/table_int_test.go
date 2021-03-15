@@ -7,13 +7,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/model"
-	"github.com/derailed/k9s/internal/render"
-	"github.com/derailed/k9s/internal/ui"
 	"github.com/derailed/tview"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/model"
+	"github.com/open-infra/osc/internal/render"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/stretchr/testify/assert"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -24,7 +24,7 @@ func TestTableSave(t *testing.T) {
 	v.Init(makeContext())
 	v.SetTitle("k9s-test")
 
-	dir := filepath.Join(config.K9sDumpDir, v.app.Config.K9s.CurrentCluster)
+	dir := filepath.Join(config.OscDumpDir, v.app.Config.Osc.CurrentCluster)
 	c1, _ := ioutil.ReadDir(dir)
 	v.saveCmd(nil)
 

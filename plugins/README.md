@@ -1,6 +1,7 @@
+
 # K9s community plugins
 
-K9s plugins extend the tool to provide additonal functionality via actions to further help you observe or administer your Kubernetes clusters.
+K9s plugins extend the tool to provide additonal functionality via actions to further help you observe or administer your OpenStack clusters.
 
 | Plugin-Name     | Description                      | Available on Views | Shortcut | Kubectl plugin, external dependencies                                                 |
 |-----------------|----------------------------------|--------------------|----------|---------------------------------------------------------------------------------------|

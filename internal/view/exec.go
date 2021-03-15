@@ -12,8 +12,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/config"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/config"
 	"github.com/rs/zerolog/log"
 	v1 "k8s.io/api/core/v1"
 	kerrors "k8s.io/apimachinery/pkg/api/errors"
@@ -49,7 +49,7 @@ func runK(a *App, opts shellOpts) bool {
 	if g, err := a.Conn().Config().ImpersonateGroups(); err == nil {
 		args = append(args, "--as-group", g)
 	}
-	args = append(args, "--context", a.Config.K9s.CurrentContext)
+	args = append(args, "--context", a.Config.Osc.CurrentContext)
 	if cfg := a.Conn().Config().Flags().KubeConfig; cfg != nil && *cfg != "" {
 		args = append(args, "--kubeconfig", *cfg)
 	}
@@ -137,7 +137,7 @@ func runKu(a *App, opts shellOpts) (string, error) {
 	if g, err := a.Conn().Config().ImpersonateGroups(); err == nil {
 		args = append(args, "--as-group", g)
 	}
-	args = append(args, "--context", a.Config.K9s.CurrentContext)
+	args = append(args, "--context", a.Config.Osc.CurrentContext)
 	if cfg := a.Conn().Config().Flags().KubeConfig; cfg != nil && *cfg != "" {
 		args = append(args, "--kubeconfig", *cfg)
 	}
@@ -171,9 +171,9 @@ func clearScreen() {
 }
 
 const (
-	k9sShell           = "k9s-shell"
-	k9sShellRetryCount = 10
-	k9sShellRetryDelay = 500 * time.Millisecond
+	oscShell           = "k9s-shell"
+	oscShellRetryCount = 10
+	oscShellRetryDelay = 500 * time.Millisecond
 )
 
 func ssh(a *App, node string) error {
@@ -188,19 +188,19 @@ func ssh(a *App, node string) error {
 	if err := launchShellPod(a, node); err != nil {
 		return err
 	}
-	ns := a.Config.K9s.ActiveCluster().ShellPod.Namespace
-	shellIn(a, client.FQN(ns, k9sShellPodName()), k9sShell)
+	ns := a.Config.Osc.ActiveCluster().ShellPod.Namespace
+	shellIn(a, client.FQN(ns, oscShellPodName()), oscShell)
 
 	return nil
 }
 
 func nukeK9sShell(a *App) error {
-	cl := a.Config.K9s.CurrentCluster
-	if !a.Config.K9s.Clusters[cl].FeatureGates.NodeShell {
+	cl := a.Config.Osc.CurrentCluster
+	if !a.Config.Osc.Clusters[cl].FeatureGates.NodeShell {
 		return nil
 	}
 
-	ns := a.Config.K9s.ActiveCluster().ShellPod.Namespace
+	ns := a.Config.Osc.ActiveCluster().ShellPod.Namespace
 	ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
 	defer cancel()
 
@@ -209,7 +209,7 @@ func nukeK9sShell(a *App) error {
 		return err
 	}
 
-	err = dial.CoreV1().Pods(ns).Delete(ctx, k9sShellPodName(), metav1.DeleteOptions{})
+	err = dial.CoreV1().Pods(ns).Delete(ctx, oscShellPodName(), metav1.DeleteOptions{})
 	if kerrors.IsNotFound(err) {
 		return nil
 	}
@@ -218,8 +218,8 @@ func nukeK9sShell(a *App) error {
 }
 
 func launchShellPod(a *App, node string) error {
-	ns := a.Config.K9s.ActiveCluster().ShellPod.Namespace
-	spec := k9sShellPod(node, a.Config.K9s.ActiveCluster().ShellPod)
+	ns := a.Config.Osc.ActiveCluster().ShellPod.Namespace
+	spec := oscShellPod(node, a.Config.Osc.ActiveCluster().ShellPod)
 	ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
 	defer cancel()
 
@@ -232,10 +232,10 @@ func launchShellPod(a *App, node string) error {
 		return err
 	}
 
-	for i := 0; i < k9sShellRetryCount; i++ {
-		o, err := a.factory.Get("v1/pods", client.FQN(ns, k9sShellPodName()), true, labels.Everything())
+	for i := 0; i < oscShellRetryCount; i++ {
+		o, err := a.factory.Get("v1/pods", client.FQN(ns, oscShellPodName()), true, labels.Everything())
 		if err != nil {
-			time.Sleep(k9sShellRetryDelay)
+			time.Sleep(oscShellRetryDelay)
 			continue
 		}
 		var pod v1.Pod
@@ -245,23 +245,23 @@ func launchShellPod(a *App, node string) error {
 		if pod.Status.Phase == v1.PodRunning {
 			return nil
 		}
-		time.Sleep(k9sShellRetryDelay)
+		time.Sleep(oscShellRetryDelay)
 	}
 
 	return fmt.Errorf("Unable to launch shell pod on node %s", node)
 }
 
-func k9sShellPodName() string {
-	return fmt.Sprintf("%s-%d", k9sShell, os.Getpid())
+func oscShellPodName() string {
+	return fmt.Sprintf("%s-%d", oscShell, os.Getpid())
 }
 
-func k9sShellPod(node string, cfg *config.ShellPod) v1.Pod {
+func oscShellPod(node string, cfg *config.ShellPod) v1.Pod {
 	var grace int64
 	var priv bool = true
 
 	return v1.Pod{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      k9sShellPodName(),
+			Name:      oscShellPodName(),
 			Namespace: cfg.Namespace,
 		},
 		Spec: v1.PodSpec{
@@ -282,7 +282,7 @@ func k9sShellPod(node string, cfg *config.ShellPod) v1.Pod {
 			},
 			Containers: []v1.Container{
 				{
-					Name:  k9sShell,
+					Name:  oscShell,
 					Image: cfg.Image,
 					VolumeMounts: []v1.VolumeMount{
 						{

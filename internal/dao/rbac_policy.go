@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/render"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/render"
 	"github.com/rs/zerolog/log"
 	rbacv1 "k8s.io/api/rbac/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"

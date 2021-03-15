@@ -5,15 +5,15 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/dao"
-	"github.com/derailed/k9s/internal/model"
-	"github.com/derailed/k9s/internal/perf"
-	"github.com/derailed/k9s/internal/render"
-	"github.com/derailed/k9s/internal/ui"
 	"github.com/derailed/tview"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/dao"
+	"github.com/open-infra/osc/internal/model"
+	"github.com/open-infra/osc/internal/perf"
+	"github.com/open-infra/osc/internal/render"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/rs/zerolog/log"
 )
 
@@ -114,7 +114,7 @@ func (p *PortForward) toggleBenchCmd(evt *tcell.EventKey) *tcell.EventKey {
 func (p *PortForward) runBenchmark() {
 	log.Debug().Msg("Bench starting...")
 
-	p.bench.Run(p.App().Config.K9s.CurrentCluster, func() {
+	p.bench.Run(p.App().Config.Osc.CurrentCluster, func() {
 		log.Debug().Msg("Bench Completed!")
 		p.App().QueueUpdate(func() {
 			if p.bench.Canceled() {

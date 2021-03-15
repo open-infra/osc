@@ -6,14 +6,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/dao"
-	"github.com/derailed/k9s/internal/model"
-	"github.com/derailed/k9s/internal/perf"
-	"github.com/derailed/k9s/internal/render"
-	"github.com/derailed/k9s/internal/ui"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/dao"
+	"github.com/open-infra/osc/internal/model"
+	"github.com/open-infra/osc/internal/perf"
+	"github.com/open-infra/osc/internal/render"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/rs/zerolog/log"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -149,7 +149,7 @@ func (s *Service) runBenchmark(port string, cfg config.BenchConfig) error {
 
 	s.App().Status(model.FlashWarn, "Benchmark in progress...")
 	log.Debug().Msg("Bench starting...")
-	go s.bench.Run(s.App().Config.K9s.CurrentCluster, s.benchDone)
+	go s.bench.Run(s.App().Config.Osc.CurrentCluster, s.benchDone)
 
 	return nil
 }

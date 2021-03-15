@@ -3,9 +3,9 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/derailed/k9s/internal/color"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/ui"
+	"github.com/open-infra/osc/internal/color"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -24,9 +24,9 @@ func printInfo() {
 	const fmat = "%-25s %s\n"
 
 	printLogo(color.Cyan)
-	printTuple(fmat, "Configuration", config.K9sConfigFile, color.Cyan)
-	printTuple(fmat, "Logs", config.K9sLogs, color.Cyan)
-	printTuple(fmat, "Screen Dumps", config.K9sDumpDir, color.Cyan)
+	printTuple(fmat, "Configuration", config.OscConfigFile, color.Cyan)
+	printTuple(fmat, "Logs", config.OscLogs, color.Cyan)
+	printTuple(fmat, "Screen Dumps", config.OscDumpDir, color.Cyan)
 }
 
 func printLogo(c color.Paint) {

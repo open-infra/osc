@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/render"
-	"github.com/derailed/k9s/internal/ui"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/render"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/rs/zerolog/log"
 	v1 "k8s.io/api/core/v1"
 )
@@ -26,7 +26,7 @@ type Container struct {
 func NewContainer(gvr client.GVR) ResourceViewer {
 	c := Container{}
 	c.ResourceViewer = NewLogsExtender(NewBrowser(gvr), c.selectedContainer)
-	c.SetEnvFn(c.k9sEnv)
+	c.SetEnvFn(c.oscEnv)
 	c.GetTable().SetEnterFn(c.viewLogs)
 	c.GetTable().SetColorerFn(render.Container{}.ColorerFunc())
 	c.GetTable().SetDecorateFn(c.decorateRows)
@@ -66,7 +66,7 @@ func (c *Container) bindDangerousKeys(aa ui.KeyActions) {
 func (c *Container) bindKeys(aa ui.KeyActions) {
 	aa.Delete(tcell.KeyCtrlSpace, ui.KeySpace)
 
-	if !c.App().Config.K9s.IsReadOnly() {
+	if !c.App().Config.Osc.IsReadOnly() {
 		c.bindDangerousKeys(aa)
 	}
 
@@ -78,7 +78,7 @@ func (c *Container) bindKeys(aa ui.KeyActions) {
 	aa.Add(resourceSorters(c.GetTable()))
 }
 
-func (c *Container) k9sEnv() Env {
+func (c *Container) oscEnv() Env {
 	path := c.GetTable().GetSelectedItem()
 	row, ok := c.GetTable().GetSelectedRow(path)
 	if !ok {

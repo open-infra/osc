@@ -13,14 +13,14 @@ import (
 
 	"github.com/atotto/clipboard"
 
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/color"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/dao"
-	"github.com/derailed/k9s/internal/model"
-	"github.com/derailed/k9s/internal/ui"
 	"github.com/derailed/tview"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/color"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/dao"
+	"github.com/open-infra/osc/internal/model"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/rs/zerolog/log"
 )
 
@@ -67,7 +67,7 @@ func (l *Log) Init(ctx context.Context) (err error) {
 	if l.app, err = extractApp(ctx); err != nil {
 		return err
 	}
-	l.model.Configure(l.app.Config.K9s.Logger)
+	l.model.Configure(l.app.Config.Osc.Logger)
 
 	l.SetBorder(true)
 	l.SetDirection(tview.FlexRow)
@@ -82,8 +82,8 @@ func (l *Log) Init(ctx context.Context) (err error) {
 	}
 	l.logs.SetBorderPadding(0, 0, 1, 1)
 	l.logs.SetText(logMessage)
-	l.logs.SetWrap(l.app.Config.K9s.Logger.TextWrap)
-	l.logs.SetMaxBuffer(l.app.Config.K9s.Logger.BufferSize)
+	l.logs.SetWrap(l.app.Config.Osc.Logger.TextWrap)
+	l.logs.SetMaxBuffer(l.app.Config.Osc.Logger.BufferSize)
 	l.logs.cmdBuff.AddListener(l)
 
 	l.ansiWriter = tview.ANSIWriter(l.logs, l.app.Styles.Views().Log.FgColor.String(), l.app.Styles.Views().Log.BgColor.String())
@@ -98,7 +98,7 @@ func (l *Log) Init(ctx context.Context) (err error) {
 	l.model.AddListener(l)
 	l.updateTitle()
 
-	l.model.ToggleShowTimestamp(l.app.Config.K9s.Logger.ShowTime)
+	l.model.ToggleShowTimestamp(l.app.Config.Osc.Logger.ShowTime)
 
 	return nil
 }
@@ -305,7 +305,7 @@ func (l *Log) filterCmd(evt *tcell.EventKey) *tcell.EventKey {
 
 // SaveCmd dumps the logs to file.
 func (l *Log) SaveCmd(*tcell.EventKey) *tcell.EventKey {
-	if path, err := saveData(l.app.Config.K9s.CurrentCluster, l.model.GetPath(), l.logs.GetText(true)); err != nil {
+	if path, err := saveData(l.app.Config.Osc.CurrentCluster, l.model.GetPath(), l.logs.GetText(true)); err != nil {
 		l.app.Flash().Err(err)
 	} else {
 		l.app.Flash().Infof("Log %s saved successfully!", path)
@@ -332,7 +332,7 @@ func ensureDir(dir string) error {
 }
 
 func saveData(cluster, name, data string) (string, error) {
-	dir := filepath.Join(config.K9sDumpDir, sanitizeFilename(cluster))
+	dir := filepath.Join(config.OscDumpDir, sanitizeFilename(cluster))
 	if err := ensureDir(dir); err != nil {
 		return "", err
 	}

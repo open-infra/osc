@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
 	"github.com/rs/zerolog/log"
 	batchv1 "k8s.io/api/batch/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"

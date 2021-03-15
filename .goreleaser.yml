@@ -23,7 +23,7 @@ builds:
     flags:
       - -trimpath
     ldflags:
-      - -s -w -X github.com/derailed/k9s/cmd.version=v{{.Version}} -X github.com/derailed/k9s/cmd.commit={{.Commit}} -X github.com/derailed/k9s/cmd.date={{.Date}}
+      - -s -w -X github.com/open-infra/osc/cmd.version=v{{.Version}} -X github.com/open-infra/osc/cmd.commit={{.Commit}} -X github.com/open-infra/osc/cmd.date={{.Date}}
 archives:
   - name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
     replacements:
@@ -57,6 +57,6 @@ brews:
       email: fernand@imhotep.io
     folder: Formula
     homepage: https://k9scli.io/
-    description: Kubernetes CLI To Manage Your Clusters In Style!
+    description: OpenStack CLI To Manage Your Clusters In Style!
     test: |
       system "k9s version"

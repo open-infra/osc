@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/dao"
-	"github.com/derailed/k9s/internal/model"
-	"github.com/derailed/k9s/internal/ui"
-	"github.com/derailed/k9s/internal/xray"
 	"github.com/derailed/tview"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/dao"
+	"github.com/open-infra/osc/internal/model"
+	"github.com/open-infra/osc/internal/ui"
+	"github.com/open-infra/osc/internal/xray"
 	"github.com/rs/zerolog/log"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -43,7 +43,7 @@ func NewSanitizer(gvr client.GVR) ResourceViewer {
 
 // Init initializes the view
 func (s *Sanitizer) Init(ctx context.Context) error {
-	s.envFn = s.k9sEnv
+	s.envFn = s.oscEnv
 
 	if err := s.Tree.Init(ctx); err != nil {
 		return err
@@ -86,7 +86,7 @@ func (s *Sanitizer) Init(ctx context.Context) error {
 
 // ExtraHints returns additional hints.
 func (s *Sanitizer) ExtraHints() map[string]string {
-	if s.app.Config.K9s.NoIcons {
+	if s.app.Config.Osc.NoIcons {
 		return nil
 	}
 	return xray.EmojiInfo()
@@ -139,7 +139,7 @@ func (s *Sanitizer) EnvFn() EnvFunc {
 	return s.envFn
 }
 
-func (s *Sanitizer) k9sEnv() Env {
+func (s *Sanitizer) oscEnv() Env {
 	env := k8sEnv(s.app.Conn().Config())
 
 	spec := s.selectedSpec()
@@ -258,7 +258,7 @@ func (s *Sanitizer) TreeLoadFailed(err error) {
 }
 
 func (s *Sanitizer) update(node *xray.TreeNode) {
-	root := makeTreeNode(node, s.ExpandNodes(), s.app.Config.K9s.NoIcons, s.app.Styles)
+	root := makeTreeNode(node, s.ExpandNodes(), s.app.Config.Osc.NoIcons, s.app.Styles)
 	if node == nil {
 		s.app.QueueUpdateDraw(func() {
 			s.SetRoot(root)
@@ -305,7 +305,7 @@ func (s *Sanitizer) TreeChanged(node *xray.TreeNode) {
 }
 
 func (s *Sanitizer) hydrate(parent *tview.TreeNode, n *xray.TreeNode) {
-	node := makeTreeNode(n, s.ExpandNodes(), s.app.Config.K9s.NoIcons, s.app.Styles)
+	node := makeTreeNode(n, s.ExpandNodes(), s.app.Config.Osc.NoIcons, s.app.Styles)
 	for _, c := range n.Children {
 		s.hydrate(node, c)
 	}

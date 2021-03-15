@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/derailed/k9s/internal/client"
+	"github.com/open-infra/osc/internal/client"
 	"github.com/stretchr/testify/assert"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )

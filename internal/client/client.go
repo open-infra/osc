@@ -32,7 +32,7 @@ const (
 
 var supportedMetricsAPIVersions = []string{"v1beta1"}
 
-// APIClient represents a Kubernetes api client.
+// APIClient represents a OpenStack api client.
 type APIClient struct {
 	client       kubernetes.Interface
 	dClient      dynamic.Interface

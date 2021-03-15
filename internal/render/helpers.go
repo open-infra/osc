@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/derailed/k9s/internal/client"
+	"github.com/open-infra/osc/internal/client"
 	"github.com/derailed/tview"
 	runewidth "github.com/mattn/go-runewidth"
 	"github.com/rs/zerolog/log"

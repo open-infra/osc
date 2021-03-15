@@ -5,12 +5,12 @@ import (
 	"errors"
 	"path/filepath"
 
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/render"
-	"github.com/derailed/k9s/internal/ui"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/render"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/rs/zerolog/log"
 )
 
@@ -36,7 +36,7 @@ func NewScreenDump(gvr client.GVR) ResourceViewer {
 }
 
 func (s *ScreenDump) dirContext(ctx context.Context) context.Context {
-	dir := filepath.Join(config.K9sDumpDir, s.App().Config.K9s.CurrentCluster)
+	dir := filepath.Join(config.OscDumpDir, s.App().Config.Osc.CurrentCluster)
 	log.Debug().Msgf("SD-DIR %q", dir)
 	config.EnsureFullPath(dir, config.DefaultDirMod)
 	return context.WithValue(ctx, internal.KeyDir, dir)

@@ -3,7 +3,7 @@ package dao
 import (
 	"context"
 
-	"github.com/derailed/k9s/internal"
+	"github.com/open-infra/osc/internal"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
 )

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/derailed/k9s/internal/client"
+	"github.com/open-infra/osc/internal/client"
 	"github.com/rs/zerolog/log"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"

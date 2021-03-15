@@ -4,11 +4,11 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/derailed/k9s/internal"
+	"github.com/open-infra/osc/internal"
 
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/dao"
-	"github.com/derailed/k9s/internal/render"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/dao"
+	"github.com/open-infra/osc/internal/render"
 	appsv1 "k8s.io/api/apps/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"

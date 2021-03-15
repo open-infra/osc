@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
 	"github.com/rs/zerolog/log"
 )
 

@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/dao"
-	"github.com/derailed/k9s/internal/ui"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/dao"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/stretchr/testify/assert"
 )
 

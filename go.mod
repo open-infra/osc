@@ -1,4 +1,4 @@
-module github.com/derailed/k9s
+module github.com/open-infra/osc
 
 go 1.15
 

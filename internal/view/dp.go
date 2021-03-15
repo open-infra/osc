@@ -1,10 +1,10 @@
 package view
 
 import (
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/dao"
-	"github.com/derailed/k9s/internal/render"
-	"github.com/derailed/k9s/internal/ui"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/dao"
+	"github.com/open-infra/osc/internal/render"
+	"github.com/open-infra/osc/internal/ui"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 

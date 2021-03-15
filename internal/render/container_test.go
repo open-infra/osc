@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/derailed/k9s/internal/render"
+	"github.com/open-infra/osc/internal/render"
 	"github.com/stretchr/testify/assert"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"

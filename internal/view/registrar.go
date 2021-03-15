@@ -3,8 +3,8 @@ package view
 import (
 	"strings"
 
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/ui"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/ui"
 )
 
 func loadCustomViewers() MetaViewers {

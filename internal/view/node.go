@@ -7,11 +7,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/dao"
-	"github.com/derailed/k9s/internal/ui"
-	"github.com/derailed/k9s/internal/ui/dialog"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/dao"
+	"github.com/open-infra/osc/internal/ui"
+	"github.com/open-infra/osc/internal/ui/dialog"
 	"github.com/rs/zerolog/log"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -38,8 +38,8 @@ func (n *Node) bindDangerousKeys(aa ui.KeyActions) {
 		ui.KeyU: ui.NewKeyAction("Uncordon", n.toggleCordonCmd(false), true),
 		ui.KeyR: ui.NewKeyAction("Drain", n.drainCmd, true),
 	})
-	cl := n.App().Config.K9s.CurrentCluster
-	if n.App().Config.K9s.Clusters[cl].FeatureGates.NodeShell {
+	cl := n.App().Config.Osc.CurrentCluster
+	if n.App().Config.Osc.Clusters[cl].FeatureGates.NodeShell {
 		aa.Add(ui.KeyActions{
 			ui.KeyS: ui.NewKeyAction("Shell", n.sshCmd, true),
 		})
@@ -49,7 +49,7 @@ func (n *Node) bindDangerousKeys(aa ui.KeyActions) {
 func (n *Node) bindKeys(aa ui.KeyActions) {
 	aa.Delete(ui.KeySpace, tcell.KeyCtrlSpace)
 
-	if !n.App().Config.K9s.IsReadOnly() {
+	if !n.App().Config.Osc.IsReadOnly() {
 		n.bindDangerousKeys(aa)
 	}
 

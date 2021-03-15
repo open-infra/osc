@@ -8,9 +8,9 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/render"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/render"
 	"k8s.io/apimachinery/pkg/runtime"
 )
 

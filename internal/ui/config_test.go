@@ -5,15 +5,15 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/render"
-	"github.com/derailed/k9s/internal/ui"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/render"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestBenchConfig(t *testing.T) {
-	os.Setenv(config.K9sConfig, "/tmp/blee")
+	os.Setenv(config.OscConfig, "/tmp/blee")
 	assert.Equal(t, "/tmp/blee/bench-fred.yml", ui.BenchConfig("fred"))
 }
 

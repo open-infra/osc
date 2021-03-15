@@ -5,14 +5,14 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/dao"
-	"github.com/derailed/k9s/internal/model"
-	"github.com/derailed/k9s/internal/render"
-	"github.com/derailed/k9s/internal/ui"
 	"github.com/fatih/color"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/dao"
+	"github.com/open-infra/osc/internal/model"
+	"github.com/open-infra/osc/internal/render"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/rs/zerolog/log"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -63,7 +63,7 @@ func (p *Pod) bindDangerousKeys(aa ui.KeyActions) {
 }
 
 func (p *Pod) bindKeys(aa ui.KeyActions) {
-	if !p.App().Config.K9s.IsReadOnly() {
+	if !p.App().Config.Osc.IsReadOnly() {
 		p.bindDangerousKeys(aa)
 	}
 

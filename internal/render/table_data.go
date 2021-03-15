@@ -1,6 +1,6 @@
 package render
 
-import "github.com/derailed/k9s/internal/client"
+import "github.com/open-infra/osc/internal/client"
 
 // TableData tracks a K8s resource for tabular display.
 type TableData struct {

@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/derailed/k9s/internal/client"
+	"github.com/open-infra/osc/internal/client"
 
 	"github.com/derailed/popeye/pkg/config"
 	"github.com/derailed/tview"

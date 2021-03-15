@@ -4,11 +4,11 @@ import (
 	"os"
 	"sync"
 
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/model"
 	"github.com/derailed/tview"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/model"
 	"github.com/rs/zerolog/log"
 )
 
@@ -41,7 +41,7 @@ func NewApp(cfg *config.Config, context string) *App {
 	a.views = map[string]tview.Primitive{
 		"menu":   NewMenu(a.Styles),
 		"logo":   NewLogo(a.Styles),
-		"prompt": NewPrompt(a.Config.K9s.NoIcons, a.Styles),
+		"prompt": NewPrompt(a.Config.Osc.NoIcons, a.Styles),
 		"crumbs": NewCrumbs(a.Styles),
 	}
 
@@ -55,7 +55,7 @@ func (a *App) Init() {
 	a.cmdBuff.AddListener(a)
 	a.Styles.AddListener(a)
 
-	a.SetRoot(a.Main, true).EnableMouse(a.Config.K9s.EnableMouse)
+	a.SetRoot(a.Main, true).EnableMouse(a.Config.Osc.EnableMouse)
 }
 
 // QueueUpdate queues up a ui action.

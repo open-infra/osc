@@ -5,10 +5,10 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/derailed/k9s/internal/dao"
-	"github.com/derailed/k9s/internal/ui"
-	"github.com/derailed/k9s/internal/ui/dialog"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal/dao"
+	"github.com/open-infra/osc/internal/ui"
+	"github.com/open-infra/osc/internal/ui/dialog"
 )
 
 // RestartExtender represents a restartable resource.
@@ -26,7 +26,7 @@ func NewRestartExtender(v ResourceViewer) ResourceViewer {
 
 // BindKeys creates additional menu actions.
 func (r *RestartExtender) bindKeys(aa ui.KeyActions) {
-	if r.App().Config.K9s.IsReadOnly() {
+	if r.App().Config.Osc.IsReadOnly() {
 		return
 	}
 	aa.Add(ui.KeyActions{

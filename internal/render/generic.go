@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/derailed/k9s/internal/client"
+	"github.com/open-infra/osc/internal/client"
 	metav1beta1 "k8s.io/apimachinery/pkg/apis/meta/v1beta1"
 )
 

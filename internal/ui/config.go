@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/render"
 	"github.com/fsnotify/fsnotify"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/render"
 	"github.com/rs/zerolog/log"
 )
 
@@ -95,7 +95,7 @@ func (c *Configurator) StylesWatcher(ctx context.Context, s synchronizer) error 
 			case evt := <-w.Events:
 				_ = evt
 				s.QueueUpdateDraw(func() {
-					c.RefreshStyles(c.Config.K9s.CurrentCluster)
+					c.RefreshStyles(c.Config.Osc.CurrentCluster)
 				})
 			case err := <-w.Errors:
 				log.Info().Err(err).Msg("Skin watcher failed")
@@ -116,14 +116,14 @@ func (c *Configurator) StylesWatcher(ctx context.Context, s synchronizer) error 
 
 // BenchConfig location of the benchmarks configuration file.
 func BenchConfig(context string) string {
-	return filepath.Join(config.K9sHome(), config.K9sBench+"-"+context+".yml")
+	return filepath.Join(config.OscHome(), config.K9sBench+"-"+context+".yml")
 }
 
 // RefreshStyles load for skin configuration changes.
 func (c *Configurator) RefreshStyles(context string) {
 	c.BenchFile = BenchConfig(context)
 
-	clusterSkins := filepath.Join(config.K9sHome(), fmt.Sprintf("%s_skin.yml", context))
+	clusterSkins := filepath.Join(config.OscHome(), fmt.Sprintf("%s_skin.yml", context))
 	if c.Styles == nil {
 		c.Styles = config.NewStyles()
 	} else {

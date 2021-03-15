@@ -6,11 +6,11 @@ import (
 	"strings"
 
 	"github.com/atotto/clipboard"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/model"
-	"github.com/derailed/k9s/internal/ui"
 	"github.com/derailed/tview"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/model"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/sahilm/fuzzy"
 )
 
@@ -273,7 +273,7 @@ func (d *Details) resetCmd(evt *tcell.EventKey) *tcell.EventKey {
 }
 
 func (d *Details) saveCmd(evt *tcell.EventKey) *tcell.EventKey {
-	if path, err := saveYAML(d.app.Config.K9s.CurrentCluster, d.title, d.text.GetText(true)); err != nil {
+	if path, err := saveYAML(d.app.Config.Osc.CurrentCluster, d.title, d.text.GetText(true)); err != nil {
 		d.app.Flash().Err(err)
 	} else {
 		d.app.Flash().Infof("Log %s saved successfully!", path)

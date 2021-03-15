@@ -3,7 +3,7 @@ package ui
 import (
 	"context"
 
-	"github.com/derailed/k9s/internal/model"
+	"github.com/open-infra/osc/internal/model"
 	"github.com/derailed/tview"
 	"github.com/gdamore/tcell/v2"
 )

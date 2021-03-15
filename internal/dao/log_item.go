@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/derailed/k9s/internal/color"
+	"github.com/open-infra/osc/internal/color"
 	"github.com/rs/zerolog/log"
 	"github.com/sahilm/fuzzy"
 )

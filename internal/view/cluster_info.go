@@ -3,13 +3,13 @@ package view
 import (
 	"fmt"
 
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/model"
-	"github.com/derailed/k9s/internal/render"
-	"github.com/derailed/k9s/internal/ui"
 	"github.com/derailed/tview"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/model"
+	"github.com/open-infra/osc/internal/render"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/rs/zerolog/log"
 )
 
@@ -127,12 +127,12 @@ const defconFmt = "%s %s level!"
 
 func (c *ClusterInfo) setDefCon(cpu, mem int) {
 	var set bool
-	l := c.app.Config.K9s.Thresholds.LevelFor("cpu", cpu)
+	l := c.app.Config.Osc.Thresholds.LevelFor("cpu", cpu)
 	if l > config.SeverityLow {
 		c.app.Status(flashLevel(l), fmt.Sprintf(defconFmt, flashMessage(l), "CPU"))
 		set = true
 	}
-	l = c.app.Config.K9s.Thresholds.LevelFor("memory", mem)
+	l = c.app.Config.Osc.Thresholds.LevelFor("memory", mem)
 	if l > config.SeverityLow {
 		c.app.Status(flashLevel(l), fmt.Sprintf(defconFmt, flashMessage(l), "Memory"))
 		set = true

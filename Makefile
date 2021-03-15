@@ -1,13 +1,13 @@
-NAME    := k9s
-PACKAGE := github.com/derailed/$(NAME)
+NAME    := osc
+PACKAGE := github.com/open-infra/$(NAME)
 GIT     := $(shell git rev-parse --short HEAD)
 SOURCE_DATE_EPOCH ?= $(shell date +%s)
 DATE    := $(shell date -u -d @${SOURCE_DATE_EPOCH} +%FT%T%Z)
-VERSION  ?= v0.24.1
-IMG_NAME := derailed/k9s
+VERSION  ?= v0.1.0
+IMG_NAME := open-infra/osc
 IMAGE    := ${IMG_NAME}:${VERSION}
 
-default: help
+default: build
 
 test:   ## Run all tests
 	@go clean --testcache && go test ./...
@@ -17,7 +17,7 @@ cover:  ## Run test coverage suite
 	@go tool cover --html=cov.out
 
 build:  ## Builds the CLI
-	@go build \
+	@time go build \
 	-ldflags "-w -s -X ${PACKAGE}/cmd.version=${VERSION} -X ${PACKAGE}/cmd.commit=${GIT} -X ${PACKAGE}/cmd.date=${DATE}" \
 	-a -tags netgo -o execs/${NAME} main.go
 

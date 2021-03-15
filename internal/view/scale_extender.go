@@ -6,10 +6,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/derailed/k9s/internal/dao"
-	"github.com/derailed/k9s/internal/ui"
 	"github.com/derailed/tview"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal/dao"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/rs/zerolog/log"
 )
 
@@ -27,7 +27,7 @@ func NewScaleExtender(r ResourceViewer) ResourceViewer {
 }
 
 func (s *ScaleExtender) bindKeys(aa ui.KeyActions) {
-	if s.App().Config.K9s.IsReadOnly() {
+	if s.App().Config.Osc.IsReadOnly() {
 		return
 	}
 	aa.Add(ui.KeyActions{

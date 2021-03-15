@@ -3,7 +3,7 @@ package ui
 import (
 	"testing"
 
-	"github.com/derailed/k9s/internal/render"
+	"github.com/open-infra/osc/internal/render"
 	"github.com/stretchr/testify/assert"
 )
 

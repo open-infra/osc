@@ -5,11 +5,11 @@ import (
 	"time"
 
 	"github.com/atotto/clipboard"
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/model"
-	"github.com/derailed/k9s/internal/ui"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/model"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/rs/zerolog/log"
 )
 
@@ -46,7 +46,7 @@ func (t *Table) Init(ctx context.Context) (err error) {
 	t.Table.Init(ctx)
 	t.SetInputCapture(t.keyboard)
 	t.bindKeys()
-	t.GetModel().SetRefreshRate(time.Duration(t.app.Config.K9s.GetRefreshRate()) * time.Second)
+	t.GetModel().SetRefreshRate(time.Duration(t.app.Config.Osc.GetRefreshRate()) * time.Second)
 	t.CmdBuff().AddListener(t)
 
 	return nil
@@ -146,7 +146,7 @@ func (t *Table) BufferActive(state bool, k model.BufferKind) {
 }
 
 func (t *Table) saveCmd(evt *tcell.EventKey) *tcell.EventKey {
-	if path, err := saveTable(t.app.Config.K9s.CurrentCluster, t.GVR().R(), t.Path, t.GetFilteredData()); err != nil {
+	if path, err := saveTable(t.app.Config.Osc.CurrentCluster, t.GVR().R(), t.Path, t.GetFilteredData()); err != nil {
 		t.app.Flash().Err(err)
 	} else {
 		t.app.Flash().Infof("File %s saved successfully!", path)

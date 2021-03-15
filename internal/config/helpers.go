@@ -10,9 +10,9 @@ import (
 )
 
 const (
-	// DefaultDirMod default unix perms for k9s directory.
+	// DefaultDirMod default unix perms for osc directory.
 	DefaultDirMod os.FileMode = 0755
-	// DefaultFileMod default unix perms for k9s files.
+	// DefaultFileMod default unix perms for osc files.
 	DefaultFileMod os.FileMode = 0600
 )
 
@@ -37,7 +37,7 @@ func InNSList(nn []interface{}, ns string) bool {
 	return InList(ss, ns)
 }
 
-func mustK9sHome() string {
+func mustOscHome() string {
 	usr, err := user.Current()
 	if err != nil {
 		log.Fatal().Err(err).Msg("Die on retrieving user home")
@@ -45,8 +45,8 @@ func mustK9sHome() string {
 	return usr.HomeDir
 }
 
-// MustK9sUser establishes current user identity or fail.
-func MustK9sUser() string {
+// MustOscUser establishes current user identity or fail.
+func MustOscUser() string {
 	usr, err := user.Current()
 	if err != nil {
 		log.Fatal().Err(err).Msg("Die on retrieving user info")

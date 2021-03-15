@@ -9,15 +9,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/dao"
-	"github.com/derailed/k9s/internal/model"
-	"github.com/derailed/k9s/internal/render"
-	"github.com/derailed/k9s/internal/ui"
-	"github.com/derailed/k9s/internal/ui/dialog"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/dao"
+	"github.com/open-infra/osc/internal/model"
+	"github.com/open-infra/osc/internal/render"
+	"github.com/open-infra/osc/internal/ui"
+	"github.com/open-infra/osc/internal/ui/dialog"
 	"github.com/rs/zerolog/log"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -75,7 +75,7 @@ func (b *Browser) Init(ctx context.Context) error {
 	if row == 0 && b.GetRowCount() > 0 {
 		b.Select(1, 0)
 	}
-	b.GetModel().SetRefreshRate(time.Duration(b.App().Config.K9s.GetRefreshRate()) * time.Second)
+	b.GetModel().SetRefreshRate(time.Duration(b.App().Config.Osc.GetRefreshRate()) * time.Second)
 
 	b.CmdBuff().SetSuggestionFn(b.suggestFilter())
 
@@ -438,7 +438,7 @@ func (b *Browser) refreshActions() {
 
 	if b.app.ConOK() {
 		b.namespaceActions(aa)
-		if !b.app.Config.K9s.IsReadOnly() {
+		if !b.app.Config.Osc.IsReadOnly() {
 			if client.Can(b.meta.Verbs, "edit") {
 				aa[ui.KeyE] = ui.NewKeyAction("Edit", b.editCmd, true)
 			}

@@ -12,8 +12,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/config"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/config"
 	"github.com/rakyll/hey/requester"
 	"github.com/rs/zerolog/log"
 )
@@ -26,7 +26,7 @@ const (
 )
 
 // K9sBenchDir directory to store K9s Benchmark files.
-var K9sBenchDir = filepath.Join(os.TempDir(), fmt.Sprintf("k9s-bench-%s", config.MustK9sUser()))
+var K9sBenchDir = filepath.Join(os.TempDir(), fmt.Sprintf("k9s-bench-%s", config.MustOscUser()))
 
 // Benchmark puts a workload under load.
 type Benchmark struct {

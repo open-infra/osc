@@ -3,8 +3,8 @@ package dialog
 import (
 	"testing"
 
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/ui"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/derailed/tview"
 	"github.com/stretchr/testify/assert"
 )

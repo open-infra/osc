@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/derailed/k9s/internal/config"
+	"github.com/open-infra/osc/internal/config"
 	m "github.com/petergtz/pegomock"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
@@ -68,8 +68,8 @@ func TestConfigRefine(t *testing.T) {
 				assert.NotNil(t, err)
 			} else {
 				assert.Nil(t, err)
-				assert.Equal(t, u.context, cfg.K9s.CurrentContext)
-				assert.Equal(t, u.cluster, cfg.K9s.CurrentCluster)
+				assert.Equal(t, u.context, cfg.Osc.CurrentContext)
+				assert.Equal(t, u.cluster, cfg.Osc.CurrentCluster)
 				assert.Equal(t, u.namespace, cfg.ActiveNamespace())
 			}
 		})
@@ -95,13 +95,13 @@ func TestConfigLoad(t *testing.T) {
 	cfg := config.NewConfig(mk)
 	assert.Nil(t, cfg.Load("testdata/k9s.yml"))
 
-	assert.Equal(t, 2, cfg.K9s.RefreshRate)
-	assert.Equal(t, 2000, cfg.K9s.Logger.BufferSize)
-	assert.Equal(t, int64(200), cfg.K9s.Logger.TailCount)
-	assert.Equal(t, "minikube", cfg.K9s.CurrentContext)
-	assert.Equal(t, "minikube", cfg.K9s.CurrentCluster)
-	assert.NotNil(t, cfg.K9s.Clusters)
-	assert.Equal(t, 2, len(cfg.K9s.Clusters))
+	assert.Equal(t, 2, cfg.Osc.RefreshRate)
+	assert.Equal(t, 2000, cfg.Osc.Logger.BufferSize)
+	assert.Equal(t, int64(200), cfg.Osc.Logger.TailCount)
+	assert.Equal(t, "minikube", cfg.Osc.CurrentContext)
+	assert.Equal(t, "minikube", cfg.Osc.CurrentCluster)
+	assert.NotNil(t, cfg.Osc.Clusters)
+	assert.Equal(t, 2, len(cfg.Osc.Clusters))
 
 	nn := []string{
 		"default",
@@ -111,9 +111,9 @@ func TestConfigLoad(t *testing.T) {
 		"kube-system",
 	}
 
-	assert.Equal(t, "kube-system", cfg.K9s.Clusters["minikube"].Namespace.Active)
-	assert.Equal(t, nn, cfg.K9s.Clusters["minikube"].Namespace.Favorites)
-	assert.Equal(t, "ctx", cfg.K9s.Clusters["minikube"].View.Active)
+	assert.Equal(t, "kube-system", cfg.Osc.Clusters["minikube"].Namespace.Active)
+	assert.Equal(t, nn, cfg.Osc.Clusters["minikube"].Namespace.Favorites)
+	assert.Equal(t, "ctx", cfg.Osc.Clusters["minikube"].View.Active)
 }
 
 func TestConfigCurrentCluster(t *testing.T) {
@@ -135,7 +135,7 @@ func TestConfigActiveNamespace(t *testing.T) {
 }
 
 func TestConfigActiveNamespaceBlank(t *testing.T) {
-	cfg := config.Config{K9s: new(config.K9s)}
+	cfg := config.Config{Osc: new(config.Osc)}
 	assert.Equal(t, "default", cfg.ActiveNamespace())
 }
 
@@ -157,7 +157,7 @@ func TestConfigActiveView(t *testing.T) {
 }
 
 func TestConfigActiveViewBlank(t *testing.T) {
-	cfg := config.Config{K9s: new(config.K9s)}
+	cfg := config.Config{Osc: new(config.Osc)}
 	assert.Equal(t, "po", cfg.ActiveView())
 }
 
@@ -205,12 +205,12 @@ func TestConfigSaveFile(t *testing.T) {
 	cfg := config.NewConfig(mk)
 	cfg.SetConnection(mc)
 	assert.Nil(t, cfg.Load("testdata/k9s.yml"))
-	cfg.K9s.RefreshRate = 100
-	cfg.K9s.ReadOnly = true
-	cfg.K9s.Logger.TailCount = 500
-	cfg.K9s.Logger.BufferSize = 800
-	cfg.K9s.CurrentContext = "blee"
-	cfg.K9s.CurrentCluster = "blee"
+	cfg.Osc.RefreshRate = 100
+	cfg.Osc.ReadOnly = true
+	cfg.Osc.Logger.TailCount = 500
+	cfg.Osc.Logger.BufferSize = 800
+	cfg.Osc.CurrentContext = "blee"
+	cfg.Osc.CurrentCluster = "blee"
 	cfg.Validate()
 	path := filepath.Join("/tmp", "k9s.yml")
 	err := cfg.SaveFile(path)

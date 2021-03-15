@@ -3,10 +3,10 @@ package ui
 import (
 	"context"
 
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/model"
 	"github.com/derailed/tview"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/model"
 	"github.com/rs/zerolog/log"
 )
 
@@ -82,7 +82,7 @@ func (f *Flash) SetMessage(m model.LevelMessage) {
 }
 
 func (f *Flash) flashEmoji(l model.FlashLevel) string {
-	if f.app.Config.K9s.NoIcons {
+	if f.app.Config.Osc.NoIcons {
 		return ""
 	}
 	switch l {

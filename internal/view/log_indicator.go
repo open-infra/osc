@@ -3,8 +3,8 @@ package view
 import (
 	"sync/atomic"
 
-	"github.com/derailed/k9s/internal/config"
 	"github.com/derailed/tview"
+	"github.com/open-infra/osc/internal/config"
 )
 
 const (
@@ -35,9 +35,9 @@ func NewLogIndicator(cfg *config.Config, styles *config.Styles) *LogIndicator {
 		styles:       styles,
 		TextView:     tview.NewTextView(),
 		scrollStatus: 1,
-		fullScreen:   cfg.K9s.Logger.FullScreenLogs,
-		textWrap:     cfg.K9s.Logger.TextWrap,
-		showTime:     cfg.K9s.Logger.ShowTime,
+		fullScreen:   cfg.Osc.Logger.FullScreenLogs,
+		textWrap:     cfg.Osc.Logger.TextWrap,
+		showTime:     cfg.Osc.Logger.ShowTime,
 	}
 	l.StylesChanged(styles)
 	styles.AddListener(&l)

@@ -3,7 +3,7 @@ package config_test
 import (
 	"testing"
 
-	"github.com/derailed/k9s/internal/config"
+	"github.com/open-infra/osc/internal/config"
 	m "github.com/petergtz/pegomock"
 	"github.com/stretchr/testify/assert"
 )
@@ -52,9 +52,9 @@ func TestIsReadOnly(t *testing.T) {
 		u := uu[k]
 		t.Run(k, func(t *testing.T) {
 			assert.Nil(t, cfg.Load("testdata/"+u.config))
-			cfg.K9s.OverrideReadOnly(u.read)
-			cfg.K9s.OverrideWrite(u.write)
-			assert.Equal(t, u.readOnly, cfg.K9s.IsReadOnly())
+			cfg.Osc.OverrideReadOnly(u.read)
+			cfg.Osc.OverrideWrite(u.write)
+			assert.Equal(t, u.readOnly, cfg.Osc.IsReadOnly())
 		})
 	}
 }
@@ -69,7 +69,7 @@ func TestK9sValidate(t *testing.T) {
 	m.When(mk.ClusterNames()).ThenReturn([]string{"c1", "c2"}, nil)
 	m.When(mk.NamespaceNames(namespaces())).ThenReturn([]string{"default"})
 
-	c := config.NewK9s()
+	c := config.NewOsc()
 	c.Validate(mc, mk)
 
 	assert.Equal(t, 2, c.RefreshRate)
@@ -92,7 +92,7 @@ func TestK9sValidateBlank(t *testing.T) {
 	m.When(mk.ClusterNames()).ThenReturn([]string{"c1", "c2"}, nil)
 	m.When(mk.NamespaceNames(namespaces())).ThenReturn([]string{"default"})
 
-	var c config.K9s
+	var c config.Osc
 	c.Validate(mc, mk)
 
 	assert.Equal(t, 2, c.RefreshRate)
@@ -106,7 +106,7 @@ func TestK9sValidateBlank(t *testing.T) {
 }
 
 func TestK9sActiveClusterZero(t *testing.T) {
-	c := config.NewK9s()
+	c := config.NewOsc()
 	c.CurrentCluster = "fred"
 	cl := c.ActiveCluster()
 	assert.NotNil(t, cl)
@@ -115,7 +115,7 @@ func TestK9sActiveClusterZero(t *testing.T) {
 }
 
 func TestK9sActiveClusterBlank(t *testing.T) {
-	var c config.K9s
+	var c config.Osc
 	cl := c.ActiveCluster()
 	assert.Equal(t, config.NewCluster(), cl)
 }
@@ -125,7 +125,7 @@ func TestK9sActiveCluster(t *testing.T) {
 	cfg := config.NewConfig(mk)
 	assert.Nil(t, cfg.Load("testdata/k9s.yml"))
 
-	cl := cfg.K9s.ActiveCluster()
+	cl := cfg.Osc.ActiveCluster()
 	assert.NotNil(t, cl)
 	assert.Equal(t, "kube-system", cl.Namespace.Active)
 	assert.Equal(t, 5, len(cl.Namespace.Favorites))

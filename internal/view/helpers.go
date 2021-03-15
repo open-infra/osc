@@ -7,13 +7,13 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/model"
-	"github.com/derailed/k9s/internal/render"
-	"github.com/derailed/k9s/internal/ui"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/model"
+	"github.com/open-infra/osc/internal/render"
+	"github.com/open-infra/osc/internal/ui"
 	"github.com/rs/zerolog/log"
 )
 
@@ -193,11 +193,11 @@ func decorateCpuMemHeaderRows(app *App, data render.TableData) render.TableData 
 			if n > 100 {
 				n = 100
 			}
-			severity := app.Config.K9s.Thresholds.LevelFor(check, n)
+			severity := app.Config.Osc.Thresholds.LevelFor(check, n)
 			if severity == config.SeverityLow {
 				continue
 			}
-			color := app.Config.K9s.Thresholds.SeverityColor(check, n)
+			color := app.Config.Osc.Thresholds.SeverityColor(check, n)
 			if len(color) > 0 {
 				re.Row.Fields[colIndex] = "[" + color + "::b]" + re.Row.Fields[colIndex]
 			}

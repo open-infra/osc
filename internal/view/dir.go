@@ -8,13 +8,13 @@ import (
 	"path"
 	"strings"
 
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/render"
-	"github.com/derailed/k9s/internal/ui"
-	"github.com/derailed/k9s/internal/ui/dialog"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/render"
+	"github.com/open-infra/osc/internal/ui"
+	"github.com/open-infra/osc/internal/ui/dialog"
 )
 
 const (
@@ -71,7 +71,7 @@ func (d *Dir) bindDangerousKeys(aa ui.KeyActions) {
 func (d *Dir) bindKeys(aa ui.KeyActions) {
 	aa.Delete(ui.KeyShiftA, tcell.KeyCtrlS, tcell.KeyCtrlSpace, ui.KeySpace)
 	aa.Delete(tcell.KeyCtrlW, tcell.KeyCtrlL, tcell.KeyCtrlD, tcell.KeyCtrlZ)
-	if !d.App().Config.K9s.IsReadOnly() {
+	if !d.App().Config.Osc.IsReadOnly() {
 		d.bindDangerousKeys(aa)
 	}
 	aa.Add(ui.KeyActions{

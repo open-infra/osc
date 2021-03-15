@@ -3,8 +3,8 @@ package dao_test
 import (
 	"testing"
 
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/dao"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/dao"
 	"github.com/stretchr/testify/assert"
 )
 

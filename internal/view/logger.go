@@ -4,11 +4,11 @@ import (
 	"context"
 
 	"github.com/atotto/clipboard"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/model"
-	"github.com/derailed/k9s/internal/ui"
 	"github.com/derailed/tview"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/model"
+	"github.com/open-infra/osc/internal/ui"
 )
 
 // Logger represents a generic log viewer.
@@ -153,7 +153,7 @@ func (l *Logger) resetCmd(evt *tcell.EventKey) *tcell.EventKey {
 }
 
 func (l *Logger) saveCmd(evt *tcell.EventKey) *tcell.EventKey {
-	if path, err := saveYAML(l.app.Config.K9s.CurrentCluster, l.title, l.GetText(true)); err != nil {
+	if path, err := saveYAML(l.app.Config.Osc.CurrentCluster, l.title, l.GetText(true)); err != nil {
 		l.app.Flash().Err(err)
 	} else {
 		l.app.Flash().Infof("Log %s saved successfully!", path)

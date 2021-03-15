@@ -3,7 +3,7 @@ package render_test
 import (
 	"testing"
 
-	"github.com/derailed/k9s/internal/render"
+	"github.com/open-infra/osc/internal/render"
 	"github.com/gdamore/tcell/v2"
 	"github.com/stretchr/testify/assert"
 	v1 "k8s.io/api/core/v1"

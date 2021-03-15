@@ -13,14 +13,14 @@ import (
 	"time"
 
 	"github.com/cenkalti/backoff"
-	"github.com/derailed/k9s/internal"
-	"github.com/derailed/k9s/internal/client"
-	"github.com/derailed/k9s/internal/config"
-	"github.com/derailed/k9s/internal/model"
-	"github.com/derailed/k9s/internal/ui"
-	"github.com/derailed/k9s/internal/watch"
 	"github.com/derailed/tview"
 	"github.com/gdamore/tcell/v2"
+	"github.com/open-infra/osc/internal"
+	"github.com/open-infra/osc/internal/client"
+	"github.com/open-infra/osc/internal/config"
+	"github.com/open-infra/osc/internal/model"
+	"github.com/open-infra/osc/internal/ui"
+	"github.com/open-infra/osc/internal/watch"
 	"github.com/rs/zerolog/log"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -54,7 +54,7 @@ type App struct {
 // NewApp returns a K9s app instance.
 func NewApp(cfg *config.Config) *App {
 	a := App{
-		App:           ui.NewApp(cfg, cfg.K9s.CurrentContext),
+		App:           ui.NewApp(cfg, cfg.Osc.CurrentContext),
 		cmdHistory:    model.NewHistory(model.MaxHistory),
 		filterHistory: model.NewHistory(model.MaxHistory),
 		Content:       NewPageStack(),
@@ -128,14 +128,14 @@ func (a *App) layout(ctx context.Context) {
 	main := tview.NewFlex().SetDirection(tview.FlexRow)
 	main.AddItem(a.statusIndicator(), 1, 1, false)
 	main.AddItem(a.Content, 0, 10, true)
-	if !a.Config.K9s.IsCrumbsless() {
+	if !a.Config.Osc.IsCrumbsless() {
 		main.AddItem(a.Crumbs(), 1, 1, false)
 	}
 	main.AddItem(flash, 1, 1, false)
 
 	a.Main.AddPage("main", main, true, false)
 	a.Main.AddPage("splash", ui.NewSplash(a.Styles, a.version), true, true)
-	a.toggleHeader(!a.Config.K9s.IsHeadless())
+	a.toggleHeader(!a.Config.Osc.IsHeadless())
 }
 
 func (a *App) initSignals() {
@@ -318,7 +318,7 @@ func (a *App) refreshCluster() error {
 		c.Stop()
 	}
 
-	count, maxConnRetry := atomic.LoadInt32(&a.conRetry), int32(a.Config.K9s.MaxConnRetry)
+	count, maxConnRetry := atomic.LoadInt32(&a.conRetry), int32(a.Config.Osc.MaxConnRetry)
 	if count >= maxConnRetry {
 		log.Error().Msgf("Conn check failed (%d/%d). Bailing out!", count, maxConnRetry)
 		ExitStatus = fmt.Sprintf("Lost K8s connection (%d). Bailing out!", count)
